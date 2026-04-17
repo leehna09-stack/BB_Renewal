@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BidBuy Korea — 정책 개선 IR 요약안 (개편본)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  .kpi-four{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+
+@media (max-width: 700px){
+  .kpi-four{
+    grid-template-columns:1fr 1fr;
+  }
+}
+  .two-metric-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  width:100%;
+}
+
+.two-metric-row .metric{
+  width:100%;
+  min-height:120px;
+}
+:root{
+  --bg:#f5f7fa; --panel:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb;
+  --navy:#1f2937; --blue:#2563eb; --green:#15803d; --amber:#d97706; --red:#dc2626;
+  --soft-blue:#eff6ff; --soft-green:#f0fdf4; --soft-amber:#fffbeb; --soft-red:#fef2f2; --soft-gray:#f8fafc;
+  --shadow:0 10px 30px rgba(17,24,39,.06); --radius:20px; --max:1140px;
+  --font:'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; font-family:var(--font); color:var(--text); background:var(--bg); line-height:1.55}
+a{text-decoration:none}
+.topbar{
+  position:sticky; top:0; z-index:20; backdrop-filter:blur(12px);
+  background:rgba(245,247,250,.86); border-bottom:1px solid rgba(229,231,235,.9)
+}
+.topbar-inner{max-width:var(--max); margin:0 auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:18px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800}
+.brand-mark{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center}
+.quick-nav{display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end}
+.quick-nav a{
+  font-size:12px; color:var(--muted); background:#fff; border:1px solid var(--line); padding:7px 10px; border-radius:999px
+}
+.slide{padding:28px 18px}
+.container{max-width:var(--max); margin:0 auto}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+.slide-card{padding:28px}
+.kicker{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.08em; color:var(--blue); text-transform:uppercase}
+.title-row{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-top:12px}
+.h1{font-size:42px; line-height:1.12; letter-spacing:-.03em; margin:0}
+.h2{font-size:28px; line-height:1.24; letter-spacing:-.02em; margin:0}
+.subtitle{margin-top:8px; color:var(--muted); font-size:15px}
+.page-no{font-size:12px; color:var(--muted); white-space:nowrap; padding-top:4px}
+.kpi-row{ display:flex;  flex-direction:column;  gap: 15px;  margin: 15px;}
+.kpi-row .metric{ width:100%;}
+.kpi-row .metric{  width:100%;  min-height:100px;   display:flex;  flex-direction:column;  justify-content:center;}
+.metric{padding:16px 18px; background:#fff; border:1px solid var(--line); border-radius:12px}
+.metric.soft-blue{background:var(--soft-blue)}
+.metric.soft-red{background:var(--soft-red)}
+.metric.soft-green{background:var(--soft-green)}
+.metric.soft-amber{background:var(--soft-amber)}
+.metric .label{font-size:12px; color:var(--muted)}
+.metric .value{margin-top:8px; font-size:30px; line-height:1; font-weight:900; letter-spacing:-.03em}
+.metric .desc{margin-top:8px; font-size:12px; color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:12px;height:100%}
+.inner-col{display:flex;flex-direction:column;gap:12px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:stretch}
+.stack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  height:100%;
+}
+
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-top:16px;
+  align-items:stretch;
+}
+
+/* 문제 > 결과 전용 레이아웃 */
+.problem-result{
+  display:grid;
+  grid-template-columns: 1fr 100px 1fr;
+  gap:16px;
+  margin-top:16px;
+  align-items:stretch;
+}
+
+.equal-stack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  height:100%;
+}
+
+.equal-stack .metric{
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.arrow-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+.arrow-symbol{
+  font-size:52px;
+  font-weight:900;
+  color:var(--blue);
+  line-height:1;
+}
+
+.arrow-text{
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.card-title{
+  font-size:20px !important;
+  line-height:1.25 !important;
+  font-weight:900;
+  letter-spacing:-.02em;
+}
+
+.metric .label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.metric .desc{
+  margin-top:8px;
+  font-size:12px;
+  line-height:1.45;
+  color:var(--muted);
+}
+
+@media (max-width: 700px){
+  .two-col,
+  .member-grid,
+  .decision-grid,
+  .kpi-row,
+  .three-col{
+    grid-template-columns:1fr;
+  }
+
+  .problem-result{
+    grid-template-columns:1fr;
+  }
+
+  .arrow-col{
+    flex-direction:row;
+    padding:6px 0;
+  }
+
+  .arrow-symbol{
+    transform:rotate(90deg);
+    font-size:40px;
+  }
+
+  .flow-row{
+    grid-template-columns:1fr;
+  }
+
+  .title-row{
+    flex-direction:column;
+  }
+
+  .page-no{
+    padding-top:0;
+  }
+
+  .h1{
+    font-size:34px;
+  }
+
+  .h2{
+    font-size:24px;
+  }
+
+  .chart-wrap,
+  .chart-wrap.tall,
+  .chart-wrap.short{
+    height:280px;
+  }
+}
+.arrow-symbol{  font-size:54px;  font-weight:500;  color:var(--navy);  line-height:2;}
+.three-col{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+.panel{padding:20px; border:1px solid var(--line); border-radius:18px; background:#fff}
+.panel h3{margin:0; font-size:18px}
+.panel-sub{margin-top:8px; color:var(--muted); font-size:13px}
+.chart-wrap{position:relative; height:320px; margin-top:16px}
+.chart-wrap.tall{height:360px}
+.chart-wrap.short{height:250px}
+.insight{  margin-top:16px; padding:14px 16px; border-radius:12px; border:1px solid var(--line); font-size:14px}
+.insight.blue{background:var(--soft-blue); color:#1e3a8a}
+.insight.red{background:var(--soft-red); color:#991b1b}
+.insight.green{background:var(--soft-green); color:#166534}
+.insight.amber{background:var(--soft-amber); color:#92400e}
+.split-topdown{display:grid; grid-template-columns:1fr; gap:14px; margin-top:20px}
+.compare-table{width:100%; border-collapse:collapse; margin-top:16px; font-size:14px}
+.compare-table th,.compare-table td{padding:12px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+.compare-table th{font-size:12px; color:var(--muted); font-weight:700; background:var(--soft-gray)}
+.compare-table tr:last-child td{border-bottom:none}
+.pill{display:inline-flex; align-items:center; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700}
+.pill.red{background:var(--soft-red); color:var(--red)}
+.pill.green{background:var(--soft-green); color:var(--green)}
+.pill.blue{background:var(--soft-blue); color:var(--blue)}
+.pill.amber{background:var(--soft-amber); color:var(--amber)}
+.small-note{font-size:12px; color:var(--muted); margin-top:12px}
+.flow-rows{display:grid; grid-template-columns:1fr; gap:10px; margin-top:16px}
+.flow-row{
+  display:grid; grid-template-columns:180px 1fr 140px; gap:14px; align-items:center;
+  padding:12px 14px; background:var(--soft-gray); border:1px solid var(--line); border-radius:12px
+}
+.flow-bar{height:12px; background:#e5e7eb; border-radius:999px; overflow:hidden}
+.flow-fill{height:100%; border-radius:999px}
+.member-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:20px}
+.member-card{padding:20px; border-radius:12px; border:1px solid var(--line); background:#fff}
+.member-card.featured{background:var(--soft-blue)}
+.member-card.vip{background:var(--soft-green)}
+.member-name{font-size:20px; font-weight:900}
+.member-price{margin-top:8px; font-size:26px; font-weight:900}
+.member-list{margin-top:12px; display:flex; flex-direction:column; gap:8px; color:#374151; font-size:14px}
+.decision-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px}
+.decision-box{padding:18px; border-radius:12px; border:1px solid var(--line)}
+.decision-box h3{margin:0 0 10px; font-size:18px}
+.decision-box ul{margin:0; padding-left:18px}
+.decision-box li{margin:8px 0}
+.decision-box.approve{background:var(--soft-green)}
+.decision-box.review{background:var(--soft-amber)}
+@media (max-width: 700px){
+  .two-col,.member-grid,.decision-grid,.kpi-row,.three-col{grid-template-columns:1fr}
+  .flow-row{grid-template-columns:1fr}
+  .title-row{flex-direction:column}
+  .page-no{padding-top:0}
+  .h1{font-size:34px}
+  .h2{font-size:24px}
+  .chart-wrap,.chart-wrap.tall,.chart-wrap.short{height:280px}
+}
+/* ── Slide 8 · Marketing Bridge 전용 ────────────────── */
+
+.mkt-alert{
+  display:flex; align-items:center; gap:14px;
+  padding:14px 18px; border-radius:12px;
+  background:var(--soft-red); border:1px solid #fecaca;
+  margin-top:16px;
+}
+.mkt-alert-icon{ font-size:24px; flex-shrink:0; }
+.mkt-alert-text{ font-size:14px; color:#991b1b; line-height:1.55; }
+.mkt-alert-text strong{ font-size:15px; }
+
+.mkt-kpi-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+
+.mkt-goal-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:16px;
+}
+.mkt-goal-card{
+  padding:16px 18px; border-radius:12px;
+  border:1px solid var(--line); background:#fff;
+  display:flex; flex-direction:column; gap:6px;
+}
+.mkt-goal-card .goal-tag{
+  font-size:12px; font-weight:800; letter-spacing:.06em;
+  padding:3px 8px; border-radius:999px; width:fit-content;
+}
+.mkt-goal-card .goal-title{ font-size:15px; font-weight:800; margin:0; }
+.mkt-goal-card .goal-desc{ font-size:13px; color:var(--muted); line-height:1.5; }
+
+.tag-blue{ background:var(--soft-blue); color:var(--blue); }
+.tag-green{ background:var(--soft-green); color:var(--green); }
+.tag-amber{ background:var(--soft-amber); color:var(--amber); }
+.tag-navy{ background:#f1f5f9; color:var(--navy); }
+
+.mkt-channel-list{ display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+.mkt-channel-row{
+  display:grid; grid-template-columns:110px 1fr 90px;
+  gap:12px; align-items:center;
+  padding:10px 14px;
+  background:var(--soft-gray); border:1px solid var(--line); border-radius:12px;
+}
+.mkt-ch-label{ font-size:13px; font-weight:700; }
+.mkt-ch-desc{ font-size:12px; color:var(--muted); }
+.mkt-ch-badge{
+  font-size:11px; font-weight:800;
+  padding:4px 8px; border-radius:999px;
+  text-align:center; white-space:nowrap;
+}
+
+.mkt-cta-wrap{
+  margin-top:20px; padding:18px 20px;
+  border-radius:12px; border:1px solid var(--line);
+  background:var(--soft-blue);
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.mkt-cta-text{ font-size:14px; color:#1e3a8a; line-height:1.6; }
+.mkt-cta-text strong{ font-size:16px; display:block; margin-bottom:4px; }
+.mkt-cta-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 20px; border-radius:12px;
+  background:var(--blue); color:#fff;
+  font-weight:800; font-size:14px;
+  white-space:nowrap; flex-shrink:0;
+  text-decoration:none;
+}
+.mkt-cta-btn:hover{ background:#1d4ed8; }
+
+/* 반응형 */
+@media(max-width:700px){
+  .mkt-kpi-row{ grid-template-columns:1fr 1fr; }
+  .mkt-goal-grid{ grid-template-columns:1fr; }
+  .mkt-channel-row{ grid-template-columns:1fr; }
+  .mkt-cta-wrap{ flex-direction:column; }
+}
+/* ──────────────────────────────────────────────────── */
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><div class="brand-mark">🐝</div><span>BIDBUY KOREA · 정책 개선 IR</span></div>
+      <div class="quick-nav">
+        <a href="#slide1">1. 문제 진단</a>
+        <a href="#slide2">2. 개편 방향</a>
+        <a href="#slide3">3. 거래 추이</a>
+        <a href="#slide4">4. VIP이탈 리스크</a>
+        <a href="#slide5">5. 수수료 개편안</a>
+        <a href="#slide6">6. 등급제 개편</a>
+        <a href="#slide7">7. 유료 서비스</a>
+        <a href="#slide8">8. 쿠폰/마일리지</a>
+        <a href="#slide9">9. 마케팅 전략</a>
+      </div>
+    </div>
+  </div>
+
+<section class="slide" id="slide1">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">01 · Problem Statement</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">고객 이탈과 성장 둔화, 비드바이의 3가지 문제점</h2>
+          <div class="subtitle">고객 이탈 증가 · 서비스 경쟁력 감소 · 접근성 낮은 리워드</div>
+        </div>
+        <div class="page-no">1 / 09</div>
+      </div>
+
+      <!-- ── 상단: 핵심 손실 수치 KPI 4개 ── -->
+      <div class="kpi-four" style="margin-top:20px;">
+        <div class="metric soft-red">
+          <div class="label">VIP 실이탈 (6개월 미복귀)</div>
+          <div class="value" style="font-size:26px;">188명</div>
+          <div class="desc">24~25년도 VIP 이력 고객 중 26년 미복귀 고객 인원</div>
+        </div>
+        <div class="metric soft-red">
+          <div class="label">신규 회원 가입율</div>
+          <div class="value" style="font-size:26px;">-36%</div>
+          <div class="desc">24년(9,519명) 대비 25년(6,039명) 감소</div>
+        </div>
+        <div class="metric soft-amber">
+          <div class="label">대행업계 내 최고가 수준</div>
+          <div class="value" style="font-size:26px;">최대 40%</div>
+          <div class="desc">경매 최대 20% <br> 구매 최대 40% 비싸</div>
+        </div>
+        <div class="metric soft-amber">
+          <div class="label">쿠폰 실사용률 (발행 대비)</div>
+          <div class="value" style="font-size:26px;">13.2%</div>
+          <div class="desc">연 9,800만원 비용 <br> 100건 중 13건만 사용</div>
+        </div>
+      </div>
+
+      <!-- ── 중단: 문제 3카테고리 ── -->
+      <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; align-items:stretch;">
+
+        <!-- 카테고리 1: 고객 이탈 증가 -->
+        <div class="panel" style="border-top:4px solid #dc2626;">
+          <div style="font-size:12px; font-weight:800; color:var(--red); letter-spacing:.08em; margin-bottom:10px;">① 고객 이탈 증가</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-red);">
+              <div style="font-size:12px; font-weight:700; color:#991b1b;">VIP 고객의 꾸준한 이탈</div>
+              <div style="font-size:12px; color:#7f1d1d; margin-top:4px;">125명 → 98명 순감소/ 실이탈 188명<br>전체 매출의 32.9%를 담당하는 핵심 고객층</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-red);">
+              <div style="font-size:12px; font-weight:700; color:#991b1b;">유입 대비 낮은 전환율</div>
+              <div style="font-size:12px; color:#7f1d1d; margin-top:4px;">가입 후 미거래 비율 63.6%<br>10명 중 6명은 단 한 번도 거래하지 않음</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-red);">
+              <div style="font-size:12px; font-weight:700; color:#991b1b;">구매 유인 요소 부재</div>
+              <div style="font-size:12px; color:#7f1d1d; margin-top:4px;">재구매 이탈율 44.9%<br>첫 거래 후 절반 가까이 이탈</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 카테고리 2: 서비스 경쟁력 감소 -->
+        <div class="panel" style="border-top:4px solid #d97706;">
+          <div style="font-size:12px; font-weight:800; color:var(--amber); letter-spacing:.08em; margin-bottom:10px;">② 서비스 경쟁력 감소</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-amber);">
+              <div style="font-size:12px; font-weight:700; color:#92400e;">신규 고객 유입·전환 감소</div>
+              <div style="font-size:12px; color:#78350f; margin-top:4px;">월 평균 가입 793명 → 503명 (-36%)<br>가입해도 구매 메리트를 못 느끼고 이탈</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-amber);">
+              <div style="font-size:12px; font-weight:700; color:#92400e;">낮은 구매대행 경쟁력</div>
+              <div style="font-size:12px; color:#78350f; margin-top:4px;">비드바이 ¥2,500 vs 경쟁사 최저 ¥1,520<br>동일 상품 기준 업계 최고가 수준</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-amber);">
+              <div style="font-size:12px; font-weight:700; color:#92400e;">구매대행 비중 지속 감소</div>
+              <div style="font-size:12px; color:#78350f; margin-top:4px;">구매대행 거래 비중 28% → 18%<br>경쟁사 수수료 인하 기간 내 비중 감소</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 카테고리 3: 접근성 낮은 리워드 -->
+        <div class="panel" style="border-top:4px solid #2563eb;">
+          <div style="font-size:12px; font-weight:800; color:var(--blue); letter-spacing:.08em; margin-bottom:10px;">③ 접근성 낮은 리워드</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-blue);">
+              <div style="font-size:12px; font-weight:700; color:#1e40af;">저조한 쿠폰 사용률</div>
+              <div style="font-size:12px; color:#1e3a8a; margin-top:4px;">신규 2.4% · 일반 13% 수준<br>연 9,800만원 비용 대비 체감 효과 미미</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-blue);">
+              <div style="font-size:12px; font-weight:700; color:#1e40af;">등급제·혜택 파악 어려운 구조</div>
+              <div style="font-size:12px; color:#1e3a8a; margin-top:4px;">5단계 복합 포인트 기준 · 고객 직관성 낮음<br>다음 등급까지 얼마나 남았는지 알 수 없음</div>
+            </div>
+            <div style="padding:10px 12px; border-radius:8px; background:var(--soft-blue);">
+              <div style="font-size:12px; font-weight:700; color:#1e40af;">등급 혜택 체감 낮음</div>
+              <div style="font-size:12px; color:#1e3a8a; margin-top:4px;">등급 쿠폰 최대 5,000원 수준<br>VIP 외 고객의 혜택 체감 미비</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── 하단: 인사이트 텍스트 ── -->
+      <div style="margin-top:16px; padding:12px 16px; background:var(--soft-gray); border-radius:8px; border-left:4px solid #64748b;">
+        <div style="font-size:12px; color:#475569; line-height:1.7;">
+          정리 : 현 비드바이 서비스에는 <strong>고객 구매를 유인할 수 있는 정책·마케팅 요소가 부족</strong>하고, 이는 곧 고객 이탈로 이어지고 있습니다.
+          <br>등급제·혜택이 있지만 <strong>어떤 혜택인지, 내가 얼마나 누리는지 파악하기 어렵고</strong>, 달성 기준도 복잡합니다.
+          <br>위 3가지 구조적 문제를 해결하지 않으면, 축소되고 있는 대행 시장에서 비드바이의 입지는 더욱 좁아집니다.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <section class="slide" id="slide2">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">02 · Reform Direction</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">4가지 정책 개편으로 서비스 만족도를 높입니다</h2>
+          <div class="subtitle">고객 혜택·등급제 접근성 개편 · 구매 유인 확충 · 구매대행 경쟁력 강화 · 마케팅 실행</div>
+        </div>
+        <div class="page-no">2 / 09</div>
+      </div>
+
+      <!-- 상단: 개편 목표 한 줄 요약 -->
+      <div style="margin-top:16px; padding:12px 20px; background:var(--soft-gray); border-radius:12px; border:1px solid var(--line); text-align:center;">
+        <div style="font-size:13px; font-weight:700; color:#1e40af;">
+          기존 고객의 재구매율 증진과 신규 고객의 서비스 진입 경험, 양 축의 만족도를 동시에 끌어올리는 것을 목표로 합니다.
+        </div>
+      </div>
+
+      <!-- 중단: 4개 Solution 카드 -->
+      <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+
+        <!-- Solution 1 -->
+        <div class="panel" style="border-top:4px solid #b1bcd8;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <div style="width:28px; height:28px; border-radius:50%; background:#dbeafe; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#1d4ed8;">01</div>
+            <div style="font-size:13px; font-weight:800; color:#1e40af;">고객 혜택 · 등급제 접근성 개편</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-blue); font-size:12px; color:#1e3a8a;">
+              <strong>등급 허들 낮추기</strong> : 5단계 복합 포인트 → 3단계 거래건수 기준<br>
+              <span style="color:#1e40af;">다음 등급까지 남은 거래수를 한눈에 파악</span>
+            </div>
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-blue); font-size:12px; color:#1e3a8a;">
+              <strong>혜택 가시성 확보</strong> : 등급별 혜택을 직관적으로 인지 가능한 구조<br>
+              <span style="color:#1e40af;">"조금만 더 쓰면 VIP!?" → 동기 부여 설계</span>
+            </div>
+          </div>
+          <div style="margin-top:8px; font-size:12px; color:var(--muted);">→ 대상: <strong>일반~프리미엄 고객</strong> (VIP 전환 직전 계층)</div>
+        </div>
+
+        <!-- Solution 2 -->
+        <div class="panel" style="border-top:4px solid #a8cfb6;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <div style="width:28px; height:28px; border-radius:50%; background:#dcfce7; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:var(--green);">02</div>
+            <div style="font-size:13px; font-weight:800; color:#166534;">구매 유인 요소 확충</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-green); font-size:12px; color:#166534;">
+              <strong>마일리지 리워드 도입</strong> : 거래할 때마다 눈에 보이게 쌓이는 구조<br>
+              <span style="color:#166534;">60일 소멸 설계 → 재구매 트리거로 작동</span>
+            </div>
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-green); font-size:12px; color:#166534;">
+              <strong>쿠폰 → 마일리지 전환</strong> : 연 9,800만원 비용 → 6,200만원으로 절감<br>
+              <span style="color:#166534;">100건 중 13건 사용 → 전 거래 자동 적립</span>
+            </div>
+          </div>
+          <div style="margin-top:8px; font-size:12px; color:var(--muted);">→ 목표: 재구매 이탈율 44.9% <strong>개선</strong> · 첫 구매 이탈율 63.6% <strong>개선</strong></div>
+        </div>
+
+        <!-- Solution 3 -->
+        <div class="panel" style="border-top:4px solid #f6dec2;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <div style="width:28px; height:28px; border-radius:50%; background:#fef3c7; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#b45309;">03</div>
+            <div style="font-size:13px; font-weight:800; color:#92400e;">구매대행 파이 확장</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-amber); font-size:12px; color:#78350f;">
+              <strong>수수료 개편 (2안 권장)</strong> : 구매대행 ¥800→¥500 · 송금수수료 폐지<br>
+              <span style="color:#92400e;">경쟁사 동등 가격대 진입 · 신규 유입 장벽 완화</span>
+            </div>
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-amber); font-size:12px; color:#78350f;">
+              <strong>무료 서비스 유료화로 손실 보전</strong> : 패킹수수료 · 비바 안심플랜<br>
+              <span style="color:#92400e;">월 손실 740만원 중 최대 86% 회수 가능</span>
+            </div>
+          </div>
+          <div style="margin-top:8px; font-size:12px; color:var(--muted);">→ 구매대행 비중 18% → 회복 목표 · 신규 530건 추가 시 손익 균형</div>
+        </div>
+
+        <!-- Solution 4 -->
+        <div class="panel" style="border-top:4px solid #828992;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+            <div style="width:28px; height:28px; border-radius:50%; background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:var(--navy);">04</div>
+            <div style="font-size:13px; font-weight:800; color:var(--navy);">고객 유입 · 전환 마케팅</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-gray); font-size:12px; color:#374151;">
+              <strong>이탈 고객 복귀 · 미거래 고객 타겟</strong> : 카카오 4,500명 세그먼트 발송<br>
+              <span style="color:#374151;">VIP 복귀 마일리지 10만원 · 등급 3개월 고정</span>
+            </div>
+            <div style="padding:8px 12px; border-radius:8px; background:var(--soft-gray); font-size:12px; color:#374151;">
+              <strong>신규 유입 채널 3개 구축</strong> : 블로그 · 네이버 광고 · 인플루언서<br>
+              <span style="color:#374151;">월 클릭 477건 → 1,000건 · 예산 50→200만원</span>
+            </div>
+          </div>
+          <div style="margin-top:8px; font-size:12px; color:var(--muted);">→ 정책 개편 효과, 마케팅 없이는 고객에게 닿지 않습니다</div>
+        </div>
+
+      </div>
+
+      <!-- 하단: 흐름 요약 -->
+      <div style="margin-top:16px; padding:10px 16px; background:var(--soft-gray); border-radius:8px; display:flex; align-items:center; gap:0; justify-content:center; flex-wrap:wrap;">
+        <div style="text-align:center; padding:6px 14px;">
+          <div style="font-size:12px; color:#64748b; font-weight:600;">등급제 개편</div>
+          <div style="font-size:12px; color:#94a3b8; margin-top:4px;">접근성 향상</div>
+        </div>
+        <div style="font-size:16px; color:#cbd5e1; padding:0 4px;">→</div>
+        <div style="text-align:center; padding:6px 14px;">
+          <div style="font-size:12px; color:#64748b; font-weight:600;">마일리지 도입</div>
+          <div style="font-size:12px; color:#94a3b8; margin-top:4px;">구매 유인</div>
+        </div>
+        <div style="font-size:16px; color:#cbd5e1; padding:0 4px;">→</div>
+        <div style="text-align:center; padding:6px 14px;">
+          <div style="font-size:12px; color:#64748b; font-weight:600;">수수료 개편</div>
+          <div style="font-size:12px; color:#94a3b8; margin-top:4px;">경쟁력 확보</div>
+        </div>
+        <div style="font-size:16px; color:#cbd5e1; padding:0 4px;">→</div>
+        <div style="text-align:center; padding:6px 14px;">
+          <div style="font-size:12px; color:#64748b; font-weight:600;">마케팅 실행</div>
+          <div style="font-size:12px; color:#94a3b8; margin-top:4px;">유입·전환</div>
+        </div>
+        <div style="font-size:16px; color:#cbd5e1; padding:0 4px;">→</div>
+        <div style="text-align:center; padding:6px 14px; background:var(--soft-blue); border-radius:8px;">
+          <div style="font-size:12px; color:#1d4ed8; font-weight:700;">서비스 만족도 개선</div>
+          <div style="font-size:12px; color:#1e40af; margin-top:4px;">재구매 · VIP 락인</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="slide3">
+    <div class="container">
+      <div class="card slide-card">
+        <span class="kicker">03 · Executive Summary</span>
+        <div class="title-row">
+          <div>
+            <h2 class="h2">경매 중심의 수익, 구매대행은 3년째 감소중</h2>
+            <div class="subtitle">💡 경쟁사가 수수료를 내리는 동안, 비드바이 구매대행 비중은 28% → 18%로 줄었습니다.</div>
+          </div>
+                    <div class="page-no">3 / 09</div>
+        </div>
+       <div style="margin-top:28px;">
+  <div class="split-topdown">
+    <div class="panel">
+      <h3>월별 거래 추이</h3>
+      <div class="chart-wrap tall"><canvas id="txChart"></canvas></div>
+    </div>
+              <div class="two-col">
+    <div class="panel">
+      <h3>구매대행 경쟁사 비교</h3>
+      <div class="panel-sub">500엔 상품 · 500g 기준</div>
+      <table class="compare-table">
+        <thead><tr><th>업체</th><th>최종 비용</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:var(--red);">비드바이</strong></td><td><strong style="color:var(--red);">¥2,500</strong></td><td><strong style="color:var(--red);">최고가</strong></td></tr>
+          <tr><td>젠마켓</td><td>¥2,184</td><td>중상위권</td></tr>
+
+          <tr><td>Buyee</td><td>¥1,750</td><td>저가권</td></tr>
+          <tr><td>사줘</td><td>¥1,520</td><td>최저가</td></tr>
+        </tbody>
+      </table>
+      <div class="insight red"><strong>구매대행:</strong> 비드바이는 경쟁사 대비 최고가 수준으로,<br><strong>신규 고객 유입 단계부터 가격 장벽이 높습니다.</strong></div>
+    </div>
+
+    <div class="panel">
+      <h3>경매대행 경쟁사 비교</h3>
+      <div class="panel-sub">5,000엔 상품 · 500g 기준</div>
+      <table class="compare-table">
+        <thead><tr><th>업체</th><th>최종 비용</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>엠재팬</td><td>¥8,200</td><td>최고가</td></tr>
+          <tr><td><strong style="color:var(--red);">비드바이</strong></td><td><strong style="color:var(--red);">¥7,950</strong></td><td><strong style="color:var(--red);">상위권</strong></td></tr>
+          <tr><td>젠마켓</td><td>¥7,434</td><td>중위권</td></tr>
+          <tr><td>Buyee</td><td>¥7,000</td><td>최저가권</td></tr>
+        </tbody>
+      </table>
+      <div class="insight red"><strong>경매대행:</strong> 경쟁사 대비 상위권에 위치하며,<br><strong>단계적으로 개선하는 전략이 필요합니다.</strong></div>
+    </div>
+      </div>
+    <div class="two-col">
+      <div class="panel">
+        <h3>10명 중 6명 이탈, 전체 고객 중 약1%만 충성 전환</h3>
+        <div class="panel-sub">가입 후 이탈율 63.6% / 잔존 고객 기준 충성 전환율 30%</div>
+        <div class="chart-wrap short"><canvas id="funnelChart"></canvas></div>
+        <div class="small-note">* 2021년~2025년 누적 데이터 기준</div>
+        <div class="small-note">* 회원 가입후 첫구매 이탈율 63% / 재구매 이탈율 45% / 충성 전환 27%</div>
+      </div>
+      <div class="stack">
+        <div class="metric soft-red"><div class="label">월 신규 가입자 수 2024 vs 2025 </div><div class="value">월 평균 793명 -> 503명 </div><div class="desc">가입자수 36% 감소</div></div>
+        <div class="metric soft-red"><div class="label">가입후 미거래 비율</div><div class="value">63.6%</div><div class="desc">10명중 6명은 단 한번도 거래 안함</div></div>
+        <div class="metric soft-red"><div class="label">신규 회원의 거래 비율</div><div class="value">경매 : 구매 , 6:4 </div><div class="desc">거래추이 대비 구매 비율이 높음</div></div>
+        <div class="insight red">신규 가입은 이루어지지만, 구매 메리트를 찾지 못하고 떠나고 있습니다. 수수료 개편과 마일리지 제도는 악순환을 끊기위한 설계 방향입니다.</div>
+    </div>
+  </div>
+</div>
+      </div>
+      
+    </div>
+  </section>
+
+
+
+<section class="slide" id="slide4">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">04 · VIP Churn Risk</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">24년도~25년 하반기 기간 내 VIP 이력이 있는 고객중,<br>최근 6개월 <strong style="color:var(--red);">미등재 고객 총 188명</strong></h2>
+        </div>
+        <div class="page-no">4 / 09</div>
+      </div>
+
+      <!-- 상단 KPI 3개 -->
+      <div class="three-col" style="margin-top:16px;">
+        <div class="metric soft-red">
+          <div class="label">VIP 순감소 (표면)</div>
+          <div class="value">-21.6%</div>
+          <div class="desc">125명 → 98명 · 신규 유입으로 실이탈 가려짐</div>
+        </div>
+        <div class="metric soft-red">
+          <div class="label">실이탈 인원 (실제)</div>
+          <div class="value">188명</div>
+          <div class="desc">6개월 미복귀 기준 · 순감소와 전혀 다른 수치</div>
+        </div>
+        <div class="metric">
+          <div class="label">VIP 거래 매출 집중도</div>
+          <div class="value">32.9%</div>
+          <div class="desc">전체 거래 비중 중 VIP 단독</div>
+        </div>
+      </div>
+
+      <!-- 메인 2단 레이아웃 -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; align-items:stretch;">
+
+        <!-- 왼쪽: 차트 + 인사이트 하나의 패널로 통합 -->
+        <div class="panel" style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <h3>VIP 수 추이</h3>
+            
+            <div class="chart-wrap short"><canvas id="vipChart"></canvas></div>
+            <br>
+            <div class="h4">2024.06 118명 → 2024.11 125명(+7명) → 2026.04 98명(-27명)</div>
+          </div>
+
+          <div style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:10px;">
+            <div class="insight amber">
+              <span style="font-size:16px; font-weight:700;">VIP 이탈 속도가 신규 유입을 앞지르고 있습니다.</span><br>
+2024~2025년 VIP 등재 이력이 있는 고객 중 <br>
+<strong>188명이 2026년 이후 VIP 명단에서 사라졌습니다.</strong><br>
+이들은 완전 이탈 또는 등급 하락한 고객의 수도 포함하며, <br>— 현재 일반·우수 등급으로 거래 횟수가 크게 줄어든 상태입니다.
+            </div>
+            <div class="insight amber">
+              <strong>VIP + 프리미엄 회원은 전체 회원 비중의</strong> 1%를 차지하나,
+              <br> 전체 매출의 60%를 두 등급이 담당하고 있기 때문에, 고객 이탈은 곧바로 매출 리스크로 연결됩니다.
+            </div>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 2트랙 손실 계단 패널 -->
+        <div class="panel" style="display:flex; flex-direction:column; gap:14px;">
+          <div>
+            <h3>VIP 이탈로 인한 손실</h3>
+          </div>
+
+          <!-- 2트랙 그리드 -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; flex:1;">
+
+            <!-- ① 수수료 손실 -->
+            <div style="display:flex; flex-direction:column; gap:7px;">
+              <div style="font-size:13px; font-weight:800; color:#991b1b; letter-spacing:.06em; padding:6px 10px; background:var(--soft-red); border-radius:8px; text-align:center;">
+                수수료
+              </div>
+
+              <div style="padding:10px 12px; border-radius:12px; border:1px solid var(--line); border-left:4px solid #fca5a5; background:#fff; flex:1;">
+                <div style="font-size:12px; color:var(--muted);">VIP 1건 수익</div>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">¥15,963 × 5% + ¥300</div>
+                <div style="font-size:16px; font-weight:900; color:#374151; margin-top:4px;">= ¥1,098 / 건</div>
+              </div>
+
+              <div style="text-align:center; font-size:13px; color:#fca5a5; line-height:1;">↓</div>
+
+              <div style="padding:10px 12px; border-radius:12px; border:1px solid var(--line); border-left:4px solid #fca5a5; background:#fff; flex:1;">
+                <div style="font-size:12px; color:var(--muted);">VIP 1인 월 수익</div>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">¥1,098 × 23건</div>
+                <div style="font-size:16px; font-weight:900; color:#374151; margin-top:4px;">≈ ¥25,254 / 월</div>
+              </div>
+
+              <div style="text-align:center; font-size:13px; color:#fca5a5; line-height:1;">↓</div>
+
+              <div style="padding:10px 12px; border-radius:12px; border:1px solid var(--line); border-left:4px solid var(--red); background:#fff; flex:1;">
+                <div style="font-size:12px; color:var(--muted);">월 손실 (188명)</div>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">¥25,254 × 188명</div>
+                <div style="font-size:16px; font-weight:900; color:var(--red); margin-top:4px;">≈ 월 약 4,607만원</div>
+              </div>
+
+              <div style="text-align:center; font-size:13px; color:#fca5a5; line-height:1;">↓</div>
+
+              <div style="padding:12px 14px; border-radius:12px; border:1px solid #fecaca; border-left:4px solid #7f1d1d; background:var(--soft-red); flex:1;">
+                <div style="font-size:12px; color:#991b1b;">연간 손실</div>
+                <div style="font-size:22px; font-weight:900; color:#991b1b; margin-top:4px;">약 5.5억원</div>
+                <div style="font-size:12px; color:#991b1b; margin-top:4px;">비드바이 순이익 감소분</div>
+              </div>
+            </div>
+
+            <!-- ② 거래액 감소 -->
+            <div style="display:flex; flex-direction:column; gap:7px;">
+              <div style="font-size:13px; font-weight:800; color:#92400e; letter-spacing:.06em; padding:6px 10px; background:var(--soft-amber); border-radius:8px; text-align:center;">
+                 잠재 거래액(물품대금) 
+              </div>
+
+              <div style="padding:10px 12px; border-radius:12px; border:1px solid var(--line); border-left:4px solid #fcd34d; background:#fff; flex:1;">
+                <div style="font-size:12px; color:var(--muted);">VIP 평균 낙찰가</div>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">2025년도 VIP 거래 기준</div>
+                <div style="font-size:16px; font-weight:900; color:#374151; margin-top:4px;">¥15,963 / 건</div>
+              </div>
+
+              <div style="text-align:center; font-size:13px; color:#fcd34d; line-height:1;">↓</div>
+
+              <div style="padding:10px 12px; border-radius:12px; border:1px solid var(--line); border-left:4px solid #fcd34d; background:#fff; flex:1;">
+                <div style="font-size:12px; color:var(--muted);">VIP 1인 월 거래액</div>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">¥15,963 × 23건</div>
+                <div style="font-size:16px; font-weight:900; color:#374151; margin-top:4px;">≈ ¥367,149 / 월</div>
+              </div>
+
+              <div style="text-align:center; font-size:13px; color:#fcd34d; line-height:1;">↓</div>
+
+              <div style="padding:10px 12px; border-radius:12px; border:1px solid var(--line); border-left:4px solid #f59e0b; background:#fff; flex:1;">
+                <div style="font-size:12px; color:var(--muted);">월 잠재 거래액 (188명)</div>
+                <div style="font-size:13px; font-weight:700; margin-top:4px;">¥367,149 × 188명</div>
+                <div style="font-size:16px; font-weight:900; color:var(--amber); margin-top:4px;">= ¥69,023,812</div>
+              </div>
+
+              <div style="text-align:center; font-size:13px; color:#fcd34d; line-height:1;">↓</div>
+
+              <div style="padding:12px 14px; border-radius:12px; border:1px solid #fde68a; border-left:4px solid var(--amber); background:var(--soft-amber); flex:1;">
+                <div style="font-size:12px; color:#92400e;">월 잠재 거래액 감소</div>
+                <div style="font-size:22px; font-weight:900; color:#92400e; margin-top:4px;">월 약 6.8억원</div>
+                <div style="font-size:12px; color:#92400e; margin-top:4px;">※ 낙찰가 기준 참고 수치</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 하단 인사이트 -->
+          <div class="insight">
+            <span style="font-size:13px; font-weight:500;">
+            * 2025년도 거래 기준 VIP회원 평균 낙찰가 ¥15,963<br>
+            * 2025년도 거래 기준 VIP회원수 총 95명 연간 26,187건<br>
+            * VIP 월 평균 거래건 = 연간거래건 / 회원수 = 23건(월)
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 하단 주석 -->
+      <div style="margin-top:16px; padding:10px 14px; border-radius:8px; background:var(--soft-gray); border:1px solid var(--line); font-size:12px; color:#9ca3af; line-height:1.8;">
+        * ① 수수료 손실 기준: 2025년도 VIP 95명 · 연간 거래 26,187건 · 월 평균 23건/인 · 평균 낙찰가 ¥15,963 · 수수료율 5% + 송금수수료 ¥300<br>
+        * ② 거래액 기준: 동일 모수(188명 · 월 23건 · ¥15,963) 적용 · 물품 낙찰가 기준 (수수료 미포함 · 비드바이 직접 매출 아님)<br>
+        * 이탈 정의: 2024.01~2025.10 VIP 이력 보유 고객 중 2025.11~2026.04(6개월) VIP 미포함 고객 기준 · 총 188명
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <section class="slide" id="slide5">
+    <div class="container">
+      <div class="card slide-card">
+        <span class="kicker">05 · Proposal of commission</span>
+        <div class="title-row">
+          <div>
+            <h2 class="h2">1. 수수료 개편안 (1안~4안)</h2>
+                    <div class="subtitle">수익 감소 수준과 가격 경쟁력, 추가 수익 회수 가능성을 기준으로 검토한 수수료 개편안</div>
+
+          </div>
+          <div class="page-no">5 / 09</div>
+        </div>
+
+        <div class="panel" style="margin-top:20px;">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th style="width:10%; text-align:center;">안</th>
+                <th style="width:28%; text-align:center;">상세</th>
+                <th style="width:24%; text-align:center;">방향</th>
+                <th style="width:22%; text-align:center;">리스크</th>
+                <th style="width:16%; text-align:center;">-</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align:center;"><strong>1안</strong></td>
+                <td style="text-align:center;">구매 ¥300 ↓ <br>+ 송금수수료 유지</td>
+                <td style="text-align:center;">수수료 수익 감소 2% ↓<br>최소 변화, 최소 리스크</td>
+                <td style="text-align:center;">시장 경쟁력 개선 어려움<br>-&gt; 수익만 감소</td>
+                <td style="text-align:center;"><span class="pill amber">효과 제한</span></td>
+                
+              </tr>
+              <tr>
+                <td style="text-align:center;"><strong style="color:var(--red);">✅ 2안</strong></td>
+                
+                <td style="text-align:center;">구매 ¥300 ↓ <br>+ <strong>구매 송금수수료 폐지</strong>
+                <br><strong style="color:var(--red);">*메루카리 제외</strong></td>
+                <td style="text-align:center;"><strong style="color:var(--red);">수수료 수익 감소 연 8% ↓</strong><br>구매대행 중심 인하</td>
+                
+                <td style="text-align:center;"><strong style="color:var(--red);">인하 효과가 제한적일 수 있음</strong><br>체감 할인 강도가 약함</td>
+                <td style="text-align:center;"><span class="pill green" style="font-size:16px; font-weight:700;">  ✅추천안</span></td>
+              </tr>
+              <tr>
+                <td style="text-align:center;"><strong>3안</strong></td>
+                <td style="text-align:center;">구매/경매 ¥300 ↓ <br>+ 송금수수료 유지</td>
+                <td style="text-align:center;">수수료 수익 감소 <strong>15% ↓</strong><br>전반적 가격 경쟁력 확보</td>
+                
+                <td style="text-align:center;">수익성과 운영 리스크가 높음</td>
+                <td style="text-align:center;"><span class="pill amber">추가 검토</span></td>
+                              </tr>
+              <tr>
+                <td style="text-align:center;"><strong>4안</strong></td>
+                <td style="text-align:center;">구매/경매 ¥300 ↓ <br>+ 송금수수료 <strong>전면 폐지</strong></td>
+                <td style="text-align:center;">수수료 수익 감소 <strong>20% ↓</strong><br>공격적 수수료 인하</td>
+                
+                <td style="text-align:center;">손익 악화 폭 큼<br>-> 유료서비스로 회수 불확실</td>
+                <td style="text-align:center;"><span class="pill red">리스크 높음</span></td>
+                
+              </tr>
+            </tbody>
+          </table>
+          <h3>👇 수수료 2안 변경 포인트</h3>
+        <div class="subtitle" style="margin-bottom:12px;">
+      구매대행 수수료 인하 및 송금수수료 폐지, 경매대행은 수익 구조 유지
+    </div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="text-align:center;">구분</th>
+          <th style="text-align:center;">항목</th>
+          <th style="text-align:center;">현행</th>
+          <th style="text-align:center;">2안</th>
+          <th style="text-align:center;">의미</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;" rowspan="2"><strong>구매대행</strong></td>
+          <td style="text-align:center;">¥5,000 이하</td>
+          <td style="text-align:center;">¥800</td>
+          <td style="text-align:center;"><strong style="color:var(--red);">¥500</strong></td>
+          <td style="text-align:center;"><strong>메루카리 포함 구매대행 일괄 인하</strong></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">송금수수료</td>
+          <td style="text-align:center;">¥300</td>
+          <td style="text-align:center;"><strong style="color:var(--red);">폐지</strong></td>
+          <td style="text-align:center;">체감 비용 즉시 감소<strong><br>(단, 메루카리는 송금수수료 부과)</strong></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;"><strong>경매대행</strong></td>
+          <td style="text-align:center;">수수료 부과 여부</td>
+          <td style="text-align:center;">현행 유지</td>
+          <td style="text-align:center;">현행 유지</td>
+          <td style="text-align:center;">핵심 수익 구조 보호</td>
+        </tr>
+      </tbody>
+    </table><br>
+         
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+    <div class="decision-box approve">
+      <h3>대행수수료 2안 추천 사유</h3>
+      <ul>
+        <li>전체 거래 58%를 차지하는 ¥5,000 이하 구간을 집중 인하합니다.</li>
+        <li>경매 수수료는 현행 유지하여 핵심 수익은 지킵니다.</li>
+        <li>저가 구간 중심 혜택으로 신규 유입을 유도합니다.</li>
+      </ul>
+    </div>
+
+    <div class="decision-box review">
+      <h3>판단 포인트</h3>
+      <ul>
+        <li>월 775만원 감소, 구매대행 530건만 더 들어오면 회복됩니다.</li>
+        <li>고객 실질 부담 증가 없이, 수익 구조는 현행 수준으로 유지됩니다.</li>
+        <li>일부 유료화로 건당 1,191원만 회수하면 됩니다.</li>
+      </ul>
+    </div>
+  </div><br>
+<div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
+            <h3 style="font-size:20px; font-weight:800; letter-spacing:-.02em; margin:0;">2. 수수료 부과 구간 변경</h3>
+   
+   <div class="panel">
+    <table class="compare-table" style="font-size:16px;">
+      <thead>
+        <tr>
+          <th style="width:15%; font-size:18px;">낙찰가 구간</th>
+          <th style="font-size:18px; text-align:center;">일반</th>
+          <th style="font-size:18px; text-align:center;">프리미엄</th>
+          <th style="font-size:18px; text-align:center;">VIP</th>
+                  </tr>
+      </thead>
+      <tbody>
+        <tr style="height:30px;">
+          <td style="text-align:center; vertical-align:middle;">
+            <strong style="color:var(--red);">¥5,000 이하</strong>
+          </td>
+          <td colspan="3" style="text-align:center; vertical-align:middle;">
+            <strong style="color:var(--red);">경매 ¥800 / 구매 ¥500</strong>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>¥5,001~¥15,000</strong></td>
+          <td style="text-align:center;">¥800</td>
+          <td style="text-align:center;">¥700</td>
+          <td style="text-align:center;">¥600</td>        
+        </tr>
+        <tr>
+          <td><strong>¥15,001~¥50,000</strong></td>
+          <td style="text-align:center;">9%</td>
+          <td style="text-align:center;">7%</td>
+          <td style="text-align:center;">5%</td>
+        </tr>
+        <tr>
+          <td><strong>¥50,001~¥150,000</strong></td>
+          <td style="text-align:center;">¥5,000</td>
+          <td style="text-align:center;">¥4,000</td>
+          <td style="text-align:center;">¥3,000</td>
+        </tr>
+        <tr>
+          <td><strong>¥150,001 이상</strong></td>
+          <td style="text-align:center;">5%</td>
+          <td style="text-align:center;">4%</td>
+          <td style="text-align:center;">3%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div> 
+
+  <!-- 3. 하단 카드 2개 가로 배치 -->
+  
+
+</div>
+      </div>
+      
+    </div>
+  </section>
+
+<section class="slide" id="slide6">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">06 · Reform of class</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">등급제 개편 상세</h2>
+          <div class="subtitle">기존의 5단계 구조에서 3단계로 개편합니다.</div>
+        </div>
+        <div class="page-no">6 / 09</div>
+      </div>
+
+      <div class="split-topdown">
+        <div class="panel">
+          <div style="background:var(--soft-gray); border-radius:12px; padding:16px 18px;">
+            <div style="font-size:15px; font-weight:700; color:var(--blue); letter-spacing:.06em; margin-bottom:10px;">GRADE RESTRUCTURING</div><br>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+
+              <!-- 현행 5단계 -->
+              <div style="flex:1; min-width:180px;">
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="background:#f2f3f7; border-radius:8px; padding:5px 10px; font-size:12px; text-align:center;">
+                    신규
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">등급 포인트 0점~49점</span>
+                  </div>
+                  <div style="background:#ebecf0; border-radius:8px; padding:5px 10px; font-size:12px; text-align:center;">
+                    일반
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">등급 포인트 50점~99점</span>
+                  </div>
+                  <div style="background:#e9f4e9; border-radius:8px; padding:5px 10px; font-size:12px; text-align:center;">
+                    우수
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">등급 포인트 100점~199점</span>
+                  </div>
+                  <div style="background:#c3dbc9; border-radius:8px; padding:5px 10px; font-size:12px; text-align:center;">
+                    프리미엄
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">등급 포인트 200점이상</span>
+                  </div>
+                  <div style="background:#c6def9; border-radius:8px; padding:5px 10px; font-size:12px; text-align:center; font-weight:700;">
+                    VIP
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">등급 포인트 500점 & 거래건수 70건 이상</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 화살표 -->
+              <div style="font-size:35px; color:var(--blue); font-weight:900; flex-shrink:0;">→</div>
+
+              <!-- 개선안 3단계 -->
+              <div style="flex:1; min-width:180px;">
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="background:#ebecf0; border-radius:8px; padding:9px 10px; font-size:12px; text-align:center; position:relative;">
+                    <span style="font-weight:700;">일반</span>
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">(월 0 ~ 4건)</span>
+                    <span style="font-size:12px; color:var(--muted); display:block;">신규 + 일반 통합</span>
+                  </div>
+                  <div style="background:#c3dbc9; border-radius:8px; padding:9px 10px; font-size:12px; text-align:center; position:relative;">
+                    <span style="font-weight:700;">프리미엄</span>
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">(월 5 ~ 9건)</span>
+                    <span style="font-size:12px; color:var(--muted); display:block;">우수 + 프리미엄 통합</span>
+                  </div>
+                  <div style="background:#c6def9; border-radius:8px; padding:9px 10px; font-size:12px; text-align:center; position:relative;">
+                    <span style="font-weight:700;">VIP</span>
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">(월 10건 이상)</span>
+                    <span style="font-size:12px; color:var(--muted); display:block;">기존 VIP회원</span>
+                  </div>
+                  <div style="background:#f8edbe; border-radius:8px; padding:9px 10px; font-size:12px; text-align:center; position:relative;">
+                    <span style="font-weight:700;">👑로열</span>
+                    <br><span style="font-size:13px; color:var(--muted); margin-top:4px;">(월 20건 이상)</span>
+                    <span style="font-size:12px; color:var(--muted); display:block;">기존 VIP중 상위50명 또는 거래수 도달</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="insight blue" style="margin-top:12px;">
+              기존 복합 포인트 기준을 <strong>거래건수 단일 기준</strong>으로 단순화합니다.
+              <br>고객이 등급 기준을 직관적으로 인지하고, 다음 등급을 목표로 추가 거래를 이어가는 구조로의 전환입니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>일반 - 프리미엄 - VIP 혜택 비교</h3>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th style="text-align:center;">일반</th>
+                <th style="text-align:center;">프리미엄</th>
+                <th style="text-align:center;">VIP</th>
+                <th style="text-align:center;">+ 👑로열(추가)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align:center;">월간 마일리지 5,000원 지급</td>
+                <td style="text-align:center;">월간 마일리지 10,000원 지급</td>
+                <td style="text-align:center;">월간 마일리지 20,000원 지급</td>
+                <td style="text-align:center;">월간 마일리지 30,000원 지급</td>
+              </tr>
+              <tr>
+                <td style="text-align:center;">마일리지 2% 적립</td>
+                <td style="text-align:center;"><strong>마일리지 5% 적립</strong></td>
+                <td style="text-align:center;"><strong>마일리지 10% 적립</strong></td>
+                <td style="text-align:center;"><strong style="color:var(--red);">마일리지 15% 적립</strong></td>
+              </tr>
+              <tr>
+                <td style="text-align:center;">무료 보관 30일</td>
+                <td style="text-align:center;">무료 보관 40일</td>
+                <td style="text-align:center;">무료 보관 50일</td>
+                <td style="text-align:center;">무료 보관 50일</td>             
+              </tr>
+              <tr>
+                <td style="text-align:center;">묶음 비용 건수별 발생<br>(2~5건 : ¥100 6~15건 : ¥300)</td>
+                <td style="text-align:center;">묶음 비용 ¥300 고정<br>(최대 15건)</td>
+                <td style="text-align:center;">묶음 비용 무료</td>
+                <td style="text-align:center;">묶음 비용 무료</td>   
+               </tr>
+              <tr>
+                <td style="text-align:center;">-</td>
+                <td style="text-align:center;">생일 쿠폰 10,000원</td>
+                <td style="text-align:center;">생일 쿠폰 10,000원</td> 
+                <td style="text-align:center;">생일 쿠폰 20,000원</td>
+              </tr>
+              <tr>
+                <td style="text-align:center;">-</td>
+                <td style="text-align:center;">-</td>
+                <td style="text-align:center;">EMS·비바특송 10% 할인</td>
+                <td style="text-align:center;">EMS·비바특송 10%  / 선편특송 5% 할인</td>
+              </tr>
+              <tr>
+                <td style="text-align:center;">-</td>
+                <td style="text-align:center;">-</td>
+                <td style="text-align:center;">VIP 전담 CS</td>
+                <td style="text-align:center;">VIP 전담 CS</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+          <!-- 스탬프 UX 삽입 -->
+           <h3>거래 리텐션 스탬프 시스템(예시)</h3>
+          <div style="margin-top:18px; padding:18px; background:var(--soft-gray); border:1px solid var(--line); border-radius:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+              <div style="font-size:14px; line-height:1.6; font-weight:800; color:var(--text);">
+                프리미엄 등급 이한나 님<br>
+                <span style="color:var(--blue); font-size:18px;">마일리지로 총 177,000원 절약중!</span>
+              </div>
+              <div style="background:var(--soft-green); color:var(--green); padding:7px 12px; border-radius:999px; font-size:12px; font-weight:800; white-space:nowrap;">
+                프리미엄
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:end; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+              <div>
+                <div style="font-size:18px; font-weight:900;">포인트 스탬프</div>
+                <div style="font-size:13px; color:var(--muted); margin-top:4px;">거래건수 기준으로 등급 달성</div>
+              </div>
+              <div style="font-size:13px; color:var(--muted);">이번 달 4건 / 10건</div>
+            </div>
+
+            <div style="background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px;">
+              <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; justify-items:center;">
+
+                <div style="width:56px; height:56px; border-radius:50%; background:#22c55e; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">1</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#22c55e; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">2</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#22c55e; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">3</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#22c55e; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800;">4</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#fff; color:var(--red); border:2px dashed var(--red); display:flex; align-items:center; justify-content:center; font-weight:800;">5</div>
+
+                <div style="width:56px; height:56px; border-radius:50%; background:#d1d5db; color:#6b7280; display:flex; align-items:center; justify-content:center; font-weight:800;">6</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#d1d5db; color:#6b7280; display:flex; align-items:center; justify-content:center; font-weight:800;">7</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#d1d5db; color:#6b7280; display:flex; align-items:center; justify-content:center; font-weight:800;">8</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#d1d5db; color:#6b7280; display:flex; align-items:center; justify-content:center; font-weight:800;">9</div>
+                <div style="width:56px; height:56px; border-radius:50%; background:#fff; color:var(--red); border:2px dashed var(--red); display:flex; align-items:center; justify-content:center; font-weight:800;">10</div>
+
+              </div>
+
+              <div style="margin-top:14px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--muted);">
+                <span><strong style="color:var(--green);">5건 달성</strong> → <strong>프리미엄 유지</strong></span>
+                <span><strong style="color:var(--red);">10건 달성</strong> → <strong>VIP 전환</strong></span>
+              </div>
+            </div>
+
+            <div class="insight blue" style="margin-top:14px;">
+              고객은 단순히 혜택표를 보는 것이 아니라, <strong>“다음 등급까지 얼마나 남았는지”</strong>를 즉시 인지하게 됩니다.
+              <br>즉, 혜택 안내를 넘어 <strong>추가 거래를 유도하는 행동형 UX</strong>로 작동합니다.
+            </div>
+          </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="slide7">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">07 · Profit Simulation</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">손실을 메우는 두 가지 유료 옵션 제안</h2>
+          <div class="subtitle">수익 회수 + 기존 4대 무료 서비스 구조 개선을 동시에 설계합니다.</div>
+        </div>
+        <div class="page-no">7 / 09</div>
+      </div>
+      <!-- 중단: 감소 원인 breakdown -->
+      <div class="panel" style="margin-top:16px;">
+        <h3>수익 감소 구조</h3>
+        <div class="h4">대행수수료 인하 + 구매대행 송금수수료 폐지의 복합 효과</div>
+        <div class="two-col" style="margin-top:16px;">
+          <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; border-radius:12px; background:var(--soft-red); border:1px solid #fecaca;">
+            <div style="font-size:32px; flex-shrink:0;">📉</div>
+            <div>
+              <div style="font-size:12px; color:#991b1b; font-weight:700; letter-spacing:.06em;">대행수수료 인하</div>
+              <div style="font-size:20px; font-weight:900; letter-spacing:-.02em; margin-top:4px;">↓ 연 384만엔 감소</div>
+              <div style="font-size:13px; color:#991b1b; margin-top:4px;">구매대행 ¥800 → ¥500 · 전 거래 건 적용</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; border-radius:12px; background:var(--soft-red); border:1px solid #fecaca;">
+            <div style="font-size:32px; flex-shrink:0;">🚫</div>
+            <div>
+              <div style="font-size:12px; color:#991b1b; font-weight:700; letter-spacing:.06em;">구매대행 송금수수료 폐지</div>
+              <div style="font-size:20px; font-weight:900; letter-spacing:-.02em; margin-top:4px;">↓ 연 519만엔 감소</div>
+              <div style="font-size:13px; color:#991b1b; margin-top:4px;">건당 ¥300 전면 폐지 (메루카리 제외)</div>
+            </div>
+          </div>
+        </div>
+        <div class="insight amber" style="margin-top:12px;">
+          <strong>설계 의도 : </strong>동일 업계내 최고가 구조에서 벗어나, 경쟁사와 동등한 가격대로 진입하기 위한 인하입니다.
+        </div>
+        <div class="subtitle">
+          * 연 8,900만원 / 월 750만원은 최대 감소액을 기준으로 산정한 수치이며, 실제 감소 규모는 거래량에 따라 달라질 수 있습니다.
+        </div>
+      </div>
+      <!-- ↑ panel 닫기. 여기서 card는 아직 열려 있음 -->
+
+      <!-- 하단: 유료 옵션 카드 2개 -->
+      <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+        <!-- 좌: 패킹 수수료 -->
+        <div class="panel" style="border-top:4px solid var(--green);">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+            <span style="font-size:22px;">📦</span>
+            <div>
+              <div style="font-size:12px; font-weight:800; color:var(--green); letter-spacing:.06em;">OPTION 01</div>
+              <h3 style="margin:2px 0 0; font-size:18px;">패킹 수수료(서비스명 변경 예정)</h3>
+            </div>
+          </div>
+          <div class="panel-sub" style="margin-bottom:14px;">포장 작업에 대한 실비 수수료 부과</div>
+
+          <!-- 1안 -->
+          <div style="padding:16px; border-radius:12px; background:var(--soft-green); border:1px solid #bbf7d0; margin-bottom:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:800; color:var(--green); letter-spacing:.06em;">1안 · 구간별 부과 / 3구간</span>
+              <span style="font-size:14px;" class="pill green">권장</span>
+            </div>
+            <div style="font-size:13px; color:#374151; margin-bottom:10px;">
+              개별 1건 <strong>¥100</strong> / 2~5건 <strong>¥300</strong> / 6~15건 <strong>¥500</strong><br>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">전건 부과시</div>
+                <div style="font-size:18px; font-weight:900; color:var(--green); margin-top:4px;">+월 600만원</div>
+                <div style="font-size:12px; color:var(--muted);">월 평균 6,510건 * ¥100</div>
+              </div>
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">손실 회수율</div>
+                <div style="font-size:18px; font-weight:900; color:var(--green); margin-top:4px;">86%</div>
+                <div style="font-size:12px; color:var(--muted);">월 손실 740만 기준</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2안 -->
+          <div style="padding:16px; border-radius:12px; background:var(--soft-gray); border:1px solid var(--line);">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:800; color:var(--muted); letter-spacing:.06em;">2안 · 구간별 부과 / 2구간</span>
+              <span style="font-size:14px;" class="pill amber">검토</span>
+            </div>
+            <div style="font-size:13px; color:#374151; margin-bottom:10px;">
+              개별배송 & 합배송 2건~5건까지 <strong>무료</strong><br>
+              합배송 6건 이상~최대15건 <strong>¥300 부과</strong><br>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">월 회수 금액</div>
+                <div style="font-size:18px; font-weight:900; color:var(--amber); margin-top:4px;">거래 패턴<br>따라 변동</div>
+              </div>
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">특징</div>
+                <div style="font-size:13px; font-weight:700; color:#374151; margin-top:4px;">소량 거래 고객<br>부담 완화</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우: 비바 안심 플랜 -->
+        <div class="panel" style="border-top:4px solid var(--blue);">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+            <span style="font-size:22px;">🛡</span>
+            <div>
+              <div style="font-size:12px; font-weight:800; color:var(--blue); letter-spacing:.06em;">OPTION 02</div>
+              <h3 style="margin:2px 0 0; font-size:18px;">비바 안심 플랜</h3>
+            </div>
+          </div>
+          <div class="panel-sub" style="margin-bottom:14px;">주문 건당 청구형 보험 개념 + 고객 안심 설계</div>
+
+          <!-- 1안 -->
+          <div style="padding:16px; border-radius:12px; background:var(--soft-blue); border:1px solid #bfdbfe; margin-bottom:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:800; color:var(--blue); letter-spacing:.06em;">1안 · 저가형 ¥100</span>
+              <span class="pill blue" style="font-size:14px;">진입 낮음</span>
+            </div>
+            <div style="font-size:13px; color:#374151; margin-bottom:10px;">
+              건당 <strong>¥100</strong> · 전건 또는 선택형 적용<br>
+              가입 진입 장벽 낮음 · 가입률 높을 가능성
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">10% 도입 시</div>
+                <div style="font-size:18px; font-weight:900; color:var(--blue); margin-top:4px;">+651건 × ¥100</div>
+                <div style="font-size:12px; color:var(--muted);">월 약 64만원</div>
+              </div>
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">특징</div>
+                <div style="font-size:13px; font-weight:700; color:#374151; margin-top:4px;">낮은 단가로<br>넓은 도달</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2안 -->
+          <div style="padding:16px; border-radius:12px; background:var(--soft-gray); border:1px solid var(--line);">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:800; color:var(--muted); letter-spacing:.06em;">2안 · 프리미엄형 ¥300</span>
+              <span class="pill amber" style="font-size:14px;">추가 검토</span>
+            </div>
+            <div style="font-size:13px; color:#374151; margin-bottom:10px;">
+              건당 <strong>¥300</strong> · 선택형 적용<br>
+              소수 가입으로도 동일 회수 가능
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">5% 도입 시</div>
+                <div style="font-size:18px; font-weight:900; color:var(--amber); margin-top:4px;">+776만원</div>
+                <div style="font-size:12px; color:var(--muted);">월 회수 기준</div>
+              </div>
+              <div style="background:#fff; border-radius:8px; padding:10px 12px; text-align:center;">
+                <div style="font-size:12px; color:var(--muted);">특징</div>
+                <div style="font-size:13px; font-weight:700; color:#374151; margin-top:4px;">소수 가입으로<br>高회수 가능</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 후순위 옵션 안내 -->
+      <div class="insight amber" style="margin-top:16px;">
+        <strong>후순위 검토:</strong> 안심포장 / 사진촬영 등 패키지형 옵션은 리뉴얼 이후 운영 안정화 단계에서 별도 검토 예정입니다.
+      </div>
+
+    </div><!-- /.card.slide-card -->
+  </div><!-- /.container -->
+</section>
+
+<section class="slide" id="slide8">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">08 · Coupon & Mileage</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">쿠폰 비용 9,800만원, 고객 체감은 13%</h2>
+          <div class="subtitle">2025년 기준 쿠폰 발행건수 37만6천개중 사용건수 5만건, 쿠폰 사용비율 약 13.2%</div>
+        </div>
+        <div class="page-no">8 / 09</div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <h3>등급별 쿠폰 사용 구조</h3>
+          <div class="panel-sub">쿠폰 사용은 상위 등급으로 갈수록 빠르게 높아지고 있습니다.</div>
+          <div class="chart-wrap short"><canvas id="couponShareChart"></canvas></div>
+          <br><div class="insight amber">
+            쿠폰 사용률 : <strong>신규회원 2.4% → VIP 65.5%</strong>(약 27배 차)<br>
+            체감 가격 경쟁력이 낮아 재구매로 이어지지 않습니다.
+          </div>
+          
+          <div class="insight red" style="margin-top:8px;">
+            등급 쿠폰은<strong> 대행수수료 최대 5천원, 국제운임 최대 3천원 할인</strong>에 불과합니다.<br>
+            이는 VIP의 매출 기여도는 높지만 등급 대비 혜택이 체감되지 않는 구조입니다.
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>쿠폰 종류별 사용률</h3>
+          <div class="panel-sub">신규~우수 구간은 활용도가 낮고, 대행수수료 쿠폰은 상위 등급에 집중됩니다.</div>
+          <table class="compare-table" style="margin-top:12px;">
+            <thead>
+              <tr>
+                <th>등급</th>
+                <th>국제운송료</th>
+                <th>대행수수료</th>
+                <th>실사용 금액(연간)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>신규회원</strong></td>
+                <td>17%</td>
+                <td><strong style="color:var(--red);">2%</strong></td>
+                <td>1,620만원</td>
+              </tr>
+              <tr>
+                <td><strong>일반회원</strong></td>
+                <td>23%</td>
+                <td>19%</td>
+                <td>1,520만원</td>
+              </tr>
+              <tr>
+                <td><strong>우수회원</strong></td>
+                <td>28%</td>
+                <td>27%</td>
+                <td>1,341만원</td>
+              </tr>
+              <tr>
+                <td><strong>프리미엄회원</strong></td>
+                <td>39%</td>
+                <td>46%</td>
+                <td>3,555만원</td>
+              </tr>
+              <tr>
+                <td><strong>VIP회원</strong></td>
+                <td>55%</td>
+                <td><strong style="color:var(--red);">83%</strong></td>
+                <td>1,964만원</td>
+              </tr>
+              <tr style="background:var(--soft-gray); border-top:2px solid var(--line);">
+                <td colspan="3"><strong>실사용 합계</strong></td>
+                <td><strong style="color:var(--red);">9,800만원</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
+            <div style="background:var(--soft-red); border-radius:8px; padding:10px 12px; text-align:center;">
+              <div style="font-size:13x; color:#991b1b; margin-bottom:2px;">연간 쿠폰 발행 금액 합계</div>
+              <div style="font-size:15px; font-weight:700; color:var(--red);">13,670만원</div>
+            </div>
+            <div style="background:var(--soft-green); border-radius:8px; padding:10px 12px; text-align:center;">
+              <div style="font-size:13px; color:#166534; margin-bottom:2px;">쿠폰 > 마일리지로 통합</div>
+              <div style="font-size:15px; font-weight:700; color:#16a34a;">쿠폰은 이벤트성·등급 보상으로 운영</div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px; padding:8px 12px; background:var(--soft-gray); border-left:3px solid #94a3b8; border-radius:0 8px 8px 0; font-size:12px; color:#64748b; line-height:1.6;">
+            * 위 실사용 금액은 쿠폰 액면가와 실제 할인 적용액의 차이를 반영한 수치입니다.<br>
+            &nbsp;&nbsp;(예: 5,000원 쿠폰 → 실제 할인 적용 3,800원 수준) 발행 기준 합계와 차이가 발생할 수 있습니다.
+          </div>
+        </div>
+      </div>
+  <h3 style="font-size:20px; font-weight:800; letter-spacing:-.02em; margin:0;">마일리지로 전환 시 — 비용은 절감되고 고객 체감은 높아집니다</h3>
+         <div class="subtitle">쿠폰 1/3 축소(4,557만원) + 마일리지 도입(6,133만원)으로, 모든 거래에 혜택이 연동되는 구조로 전환합니다.</div>
+      <div class="two-col" style="margin-top:16px;">
+        <div class="panel">
+          <h3>마일리지 제도</h3>
+          <div class="panel-sub">쿠폰 발행 수를 줄이되, 재구매를 유도하는 누적 보상 장치를 새롭게 도입합니다.</div>
+          <table class="compare-table" style="margin-top:16px;">
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>내용</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>적립 기준</strong></td>
+                <td>대행 + 송금수수료 결제금액의<strong style="color:var(--red);"> 2~10% 적립</strong></td>
+              </tr>
+              <tr>
+                <td><strong>사용 제한</strong></td>
+                <td><strong style="color:var(--red);">1. 60일 이후 소멸<br>2. 1차결제시 대행수수료 최대 50%까지 사용</strong></td>
+              </tr>
+              <tr>
+                <td><strong>일반</strong><br>(신규~일반)</td>
+                <td>2% 적립<br>→ 연간 840만원 예상</td>
+              </tr>
+              <tr>
+                <td><strong>프리미엄</strong><br>(우수~프리미엄)</td>
+                <td>5% 적립<br>→ 연간 2,000만원 예상</td>
+              </tr>
+              <tr>
+                <td><strong>VIP</strong></td>
+                <td>10% 적립<br>→ 연간 3,400만원 예상</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <h3>쿠폰 vs 마일리지 비용 효율 비교</h3>
+          <div class="panel-sub">같은 비용, 마일리지는 체감이 다릅니다.</div>
+          <table class="compare-table" style="margin-top:12px; border-collapse:collapse; width:100%;">
+            <thead>
+              <tr>
+                <th style="width:36%;"></th>
+                <th style="background:var(--soft-red); color:#991b1b; text-align:center;font-size:15px;">쿠폰</th>
+                <th style="background:var(--soft-green); color:#166534; text-align:center;font-size:15px;">마일리지</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>연간 비용(실사용)</strong></td>
+                <td style="background:var(--soft-red); text-align:center; font-weight:700; color:var(--red);">9,800만원</td>
+                <td style="background:var(--soft-green); text-align:center; font-weight:700; color:#16a34a;">6,200만원 (예상)</td>
+              </tr>
+              <tr>
+                <td><strong>도달률</strong></td>
+                <td style="background:var(--soft-red); text-align:center; color:var(--red);">100건 중 13건만 사용<br></td>
+                <td style="background:var(--soft-green); text-align:center; color:#16a34a;">1차결제 완료시 적립</td>
+              </tr>
+              <tr>
+                <td><strong>체감 시점</strong></td>
+                <td style="background:var(--soft-red); text-align:center;">한달 후 소멸</td>
+                <td style="background:var(--soft-green); text-align:center;">결제할 때마다 바로 쌓임</td>
+              </tr>
+              <tr>
+                <td><strong>재구매 연계</strong></td>
+                <td style="background:var(--soft-red); text-align:center;">최고 5,000원 / 미비</td>
+                <td style="background:var(--soft-green); text-align:center;">등급 오를수록 적립률 상승</td>
+              </tr>
+              <tr>
+                <td><strong>이탈 방지</strong></td>
+                <td style="background:var(--soft-red); text-align:center;">없음</td>
+                <td style="background:var(--soft-green); text-align:center;">잔여 포인트가 억제</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="insight green" style="margin-top:12px;">
+            마일리지는 <strong>거래할수록 혜택이 커지는 구조</strong>로 체감 만족도가 높습니다.<br>
+            쿠폰 사용률 13.2%(발행 대비) 대비, 마일리지는 <strong>모든 거래에서 적립</strong>됩니다.
+          </div>
+        </div>
+      </div>
+        </div>
+
+      
+
+    </div>
+  </div>
+</section>
+<section class="slide" id="slide9">
+  <div class="container">
+    <div class="card slide-card">
+      <span class="kicker">09 · Marketing Strategy</span>
+      <div class="title-row">
+        <div>
+          <h2 class="h2">정책 개편과 마케팅, 시너지 효과를 목표로</h2>
+          <div class="subtitle">정책 개편과 마케팅 실행이 결합될 때 신규 유입 / 재구매 / VIP 락인이 완성됩니다.</div>
+        </div>
+        <div class="page-no">9 / 09</div>
+      </div>
+      <!-- KPI 수치 3개 -->
+      <div class="mkt-kpi-row">
+        <div class="metric soft-red">
+          <div class="label">카카오톡 가입 회원</div>
+          <div class="value">4,500명</div>
+          <div class="desc">전체 회원중 85%가 미접점</div>
+        </div>
+        <div class="metric soft-amber">
+          <div class="label">현행 월 마케팅 예산</div>
+          <div class="value">50만원</div>
+          <div class="desc">네이버 키워드 단일 채널 집행 중</div>
+        </div>
+        <div class="metric soft-green">
+          <div class="label">제안 월 예산</div>
+          <div class="value">200만원</div>
+          <div class="desc">3채널 확장 시 클릭 수 ×2.1 목표</div>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+
+        <!-- 왼쪽: 목표 4개 카드 -->
+        <div>
+          <div class="panel" style="height:80%;">
+            <h3> 마케팅 목표</h3>
+            <div class="mkt-goal-grid">
+
+              <div class="mkt-goal-card">
+                <span class="goal-tag tag-blue">신규 유입</span>
+                <p class="goal-title">가격 장벽 완화 메시지</p>
+                <p class="goal-desc">
+                  ✔️ 유류비 인상 없이 그대로
+                  <br>✔️  엔화 환율 하락 알림
+                  <br>✔️ 대행 수수료 인하 광고톡</p>
+                  
+              </div>
+
+              <div class="mkt-goal-card">
+                <span class="goal-tag tag-green">재구매 유도</span>
+                <p class="goal-title">미거래 회원 재활성화</p>
+                <p class="goal-desc">                  
+                  💰 복귀 감사 혜택<br>ex.마일리지 & 등급고정
+                  <br>💰 설문 유도, 보상 마일리지 지급                  
+                  </p>
+              </div>
+
+              <div class="mkt-goal-card">
+                <span class="goal-tag tag-amber">VIP 복귀</span>
+                <p class="goal-title">이탈 고객을 다시 VIP로</p>
+                <p class="goal-desc">복귀 고객 대상 설문조사 진행과 복귀 보상(마일리지 지급 & 3개월 등급 고정)으로 재구매를 유도</p>
+              </div>
+
+              <div class="mkt-goal-card">
+                <span class="goal-tag tag-navy">LTV(고객 생애 가치) 확대</span>
+                <p class="goal-title">혜택 → 재구매 → 락인</p>
+                <p class="goal-desc">마일리지 적립 구조와 인플루언서·블로그 채널을 연결해 재구매 사이클 설계</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 채널 요약 + CTA -->
+        <div class="stack">
+          <div class="panel">
+            <h3>3채널 실행 구조 요약</h3>
+            <div class="panel-sub">채널별 역할과 즉시 실행 가능 여부</div>
+            <div class="mkt-channel-list">
+
+              <div class="mkt-channel-row">
+                <div class="mkt-ch-label">📢 카카오톡</div>
+                <div class="mkt-ch-desc">-4,500명 구독자 대상 정책 개편 안내 <br>- 마일리지 도입 공지 <br>- 정기 큐레이션 발송</div>
+                <div class="mkt-ch-badge" style="background:var(--soft-green);color:var(--green);">즉시 가능</div>
+              </div>
+
+              <div class="mkt-channel-row">
+                <div class="mkt-ch-label">🔍 네이버 광고</div>
+                <div class="mkt-ch-desc">-키워드 재구성 후 예산 50→100만원 증액<br>- 월 클릭 477건 →1,000건 목표</div>
+                <div class="mkt-ch-badge" style="background:var(--soft-amber);color:var(--amber);">예산 승인 필요</div>
+              </div>
+
+              <div class="mkt-channel-row">
+                <div class="mkt-ch-label">🎥 인플루언서</div>
+                <div class="mkt-ch-desc">- 마이크로 인플루언서 2~3명으로 테스트 시작<br>- 리뉴얼 60~90일 전부터 노출 선행</div>
+                <div class="mkt-ch-badge" style="background:var(--soft-amber);color:var(--amber);">예산 승인 필요</div>
+              </div>
+
+              <div class="mkt-channel-row">
+                <div class="mkt-ch-label">📝 블로그</div>
+                <div class="mkt-ch-desc">- 월 4건 정기 발행 <br>- 3개월 내 유입 500명+ 목표 <br>- AI 초안 + 담당자 검수 반자동화</div>
+                <div class="mkt-ch-badge" style="background:var(--soft-green);color:var(--green);">즉시 가능</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="mkt-cta-wrap">
+            <div class="mkt-cta-text">
+              <strong>📄 마케팅 제안서 상세 내용</strong>
+              예산 시나리오 · 목표 · AI 초안 포함
+            </div>
+            <a href="https://bidbuycs.github.io/marketing_Visualize/" target="_blank" class="mkt-cta-btn">
+              상세 제안서 보기 →
+            </a>
+          </div>
+
+        </div>
+      </div>    
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+Chart.defaults.font.family = 'Pretendard';
+Chart.defaults.color = '#374151';
+Chart.defaults.plugins.legend.onClick = () => {};
+Chart.defaults.plugins.tooltip.enabled = true;
+
+const txLabels = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','26.1','26.2','26.3'];
+const auc = [4590,5162,5522,5272,5023,4809,5048,5071,5241,4881,5073,5026,5030,4720,5643];
+const pur = [1759,1756,1770,1446,1441,1418,1328,1493,1326,1338,1115,1112,1324,1197,1373];
+
+new Chart(document.getElementById('txChart'), {
+  type: 'line',
+  data: {
+    labels: txLabels,
+    datasets: [
+      {label:'경매대행', data:auc, borderColor:'#1f2937', backgroundColor:'rgba(31,41,55,.10)', fill:true, tension:.28, pointRadius:2.5, borderWidth:2.4},
+      {label:'구매대행', data:pur, borderColor:'#d97706', backgroundColor:'rgba(217,119,6,.10)', fill:true, tension:.28, pointRadius:2.5, borderWidth:2.4}
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'top', labels:{usePointStyle:true, boxWidth:10}}},
+    scales:{
+      x:{grid:{display:false}},
+      y:{grid:{color:'var(--line)'}}
+    }
+  }
+});
+
+new Chart(document.getElementById('funnelChart'), {
+  type: 'bar',
+  data: {
+    labels: ['전체 가입','1건 이상 거래','2건 이상 재구매','충성(10건+)','등급 상승'],
+    datasets: [{
+      data: [34612,12614,6941,1925,334],
+      backgroundColor: ['#1f2937','#374151','#6b7280','#d97706','#15803d'],
+      borderRadius: 10
+    }]
+  },
+  options:{
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{grid:{color:'var(--line)'}},
+      y:{grid:{display:false}}
+    }
+  }
+});
+
+new Chart(document.getElementById('vipChart'), {
+  type:'line',
+  data:{
+    labels:['24.6','24.7','24.8','24.9','24.10','24.11','24.12',
+'25.1','25.2','25.3','25.4','25.5','25.6','25.7','25.8','25.9','25.10','25.11','25.12',
+'26.1','26.2','26.3','26.4'],
+    datasets:[{
+      data:[ 118,120,122,121,119,125,118,
+    115,105,105,110,107,105,101,101,101,97,95,97,
+    99,97,96,98],
+      borderColor:'#dc2626',
+      backgroundColor:'rgba(220,38,38,.08)',
+      fill:true,
+      tension:.25,
+      pointRadius:2.5,
+      borderWidth:2.4
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{grid:{display:false}},
+      y:{min:90, max:130, grid:{color:'var(--line)'}}
+    }
+  }
+});
+
+const buyChartEl = document.getElementById('buyChart');
+if (buyChartEl) {
+  new Chart(buyChartEl, {
+    type:'bar',
+    data:{
+      labels:['비드바이','젠마켓','재팬앤조이','메루카이','Buyee','카에루','사줘'],
+      datasets:[{
+        data:[2500,2184,2070,2050,1750,1550,1520],
+        backgroundColor:['#dc2626','#9ca3af','#9ca3af','#9ca3af','#9ca3af','#9ca3af','#9ca3af'],
+        borderRadius:10
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'var(--line)'}},
+        y:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+const auctionChartEl = document.getElementById('auctionChart');
+if (auctionChartEl) {
+  new Chart(auctionChartEl, {
+    type:'bar',
+    data:{
+      labels:['엠재팬','비드바이','재팬앤조이','지오패스','젠마켓','메루카이','Buyee'],
+      datasets:[{
+        data:[8200,7950,7670,7550,7434,7359,7000],
+        backgroundColor:['#9ca3af','#2563eb','#9ca3af','#9ca3af','#9ca3af','#9ca3af','#9ca3af'],
+        borderRadius:10
+      }]
+    },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{min:6800, grid:{color:'var(--line)'}},
+        y:{grid:{display:false}}
+      }
+    }
+  });
+}
+
+const positionChartEl = document.getElementById('positionChart');
+if (positionChartEl) {
+  new Chart(positionChartEl, {
+    type:'bar',
+    data:{
+      labels:['비드바이(현행)','비드바이(2안)','젠마켓','재팬앤조이','메루카이','카에루','사줘'],
+      datasets:[{
+        data:[2500,2100,2184,2070,2050,1550,1520],
+        backgroundColor:['#dc2626','#15803d','#9ca3af','#9ca3af','#9ca3af','#9ca3af','#9ca3af'],
+        borderRadius:10
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{display:false}},
+        y:{grid:{color:'var(--line)'}}
+      }
+    }
+  });
+}
+
+
+new Chart(document.getElementById('couponShareChart'), {
+  type:'bar',
+  data:{
+    labels:['신규','일반','우수','프리미엄','VIP'],
+    datasets:[{
+      label:'고객구분별 쿠폰 사용 비중',
+      data:[2.4,19.0,25.5,40.0,65.5],
+      backgroundColor:['#cbd5e1','#94a3b8','#fbbf24','#60a5fa','#dc2626'],
+      borderRadius:10
+    }]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{grid:{display:false}},
+      y:{
+        beginAtZero:true,
+        grid:{color:'var(--line)'},
+        ticks:{
+          callback: function(value){ return value + '%'; }
+        }
+      }
+    }
+  }
+});
+
+});
+</script>
+
+</body>
+</html>
